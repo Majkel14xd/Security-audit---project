@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System mierzenia opadów wody</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href=" {% static 'index/index_style.css' %} "
+    />
+    <script src="{% static 'index/index.js' %}"></script>
+  </head>
+  <body>
+    <div id="top-menu">
+      <a href="/login/">Zaloguj</a>
+      <a href="/admin/">Panel Administratora</a>
+    </div>
+    <div id="content">Witaj na stronie monitorowanie opadów deszczu</div>
+    <div id="footer">Copyright Michał Lidwa 2023/2024</div>
+  </body>
+</html>

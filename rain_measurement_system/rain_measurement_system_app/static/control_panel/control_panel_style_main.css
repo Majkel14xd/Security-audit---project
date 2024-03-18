@@ -1,0 +1,154 @@
+#welcome_message {
+  text-align: center;
+  color: white;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.content_main_control_panel {
+  width: 85%;
+  max-width: 85%;
+  box-sizing: border-box;
+  float: right;
+}
+
+.column {
+  width: 100%;
+  max-width: 33.33%;
+  box-sizing: border-box;
+  float: right;
+  height: 90vh;
+}
+
+#water_sensor {
+  background-color: white;
+}
+#rain_sensor {
+  background-color: gold;
+}
+#rain_gaugae {
+  background-color: blue;
+}
+
+input[type="checkbox"] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 100px;
+  height: 50px;
+  background: grey;
+  display: block;
+  border-radius: 25px;
+  position: relative;
+}
+
+label:after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+input:checked + label {
+  background: #bada55;
+}
+
+input:checked + label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+label:active:after {
+  width: 65px;
+}
+.gauge {
+  width: 100%;
+  max-width: 250px;
+  font-family: "Roboto", sans-serif;
+  font-size: 32px;
+  color: #004033;
+  float: center;
+}
+
+.gauge__body {
+  width: 100%;
+  height: 0;
+  padding-bottom: 50%;
+  background: #b4c0be;
+  position: relative;
+  border-top-left-radius: 100% 200%;
+  border-top-right-radius: 100% 200%;
+  overflow: hidden;
+  float: center;
+}
+
+.gauge__fill {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: inherit;
+  height: 100%;
+  background: #009578;
+  transform-origin: center top;
+  transform: rotate(0.25turn);
+  transition: transform 0.2s ease-out;
+  float: center;
+}
+
+.gauge__cover {
+  width: 75%;
+  height: 150%;
+  background: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 25%;
+  box-sizing: border-box;
+  float: center;
+}
+
+#Informacja {
+  text-align: center;
+}
+
+#get_water_notification_text_data {
+  text-align: center;
+}
+
+#get_water_sensor_text_data {
+  text-align: center;
+}
+
+#get_rain_sensor_text_data {
+  text-align: center;
+}
+
+#gauge__body {
+  float: center;
+}
+
+
+#get_rain_gauge_data{
+  width: 100%;
+  max-width: 250px;
+  font-family: "Roboto", sans-serif;
+  font-size: 32px;
+  color: black;
+ text-align: right;
+}
+

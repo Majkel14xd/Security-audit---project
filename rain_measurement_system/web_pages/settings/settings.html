@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ustawienia</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href=" {% static 'control_panel/control_panel_style.css' %} "
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href=" {% static 'settings/settings_style.css' %} "
+    />
+    <script src="{% static 'settings/settings.js' %} "></script>
+  </head>
+  <body>
+    <div id="top_menu">
+      <a href="/signout">Wyloguj</a>
+    </div>
+    <div id="content">
+      <h1>Usuń dane z bazy</h1>
+      <form method="POST" id="delete_data_sensors" onsubmit="clearForm()">
+        {% csrf_token %}
+        <input
+          type="submit"
+          value="Usuń dane z czujnikow"
+          name="sensors"
+          onclick="return confirm('Czy na pewno chcesz usunąć dane z czujnikow?');"
+        />
+      </form>
+
+      <form method="POST" id="delete_data_logs" onsubmit="clearForm()">
+        {% csrf_token %}
+        <input
+          type="submit"
+          value="Usuń dane z logami"
+          name="logs"
+          onclick="return confirm('Czy na pewno chcesz usunąć dane z logami?');"
+        />
+      </form>
+
+      <form method="POST" id="delete_device_info" onsubmit="clearForm()">
+        {% csrf_token %}
+        <input
+          type="submit"
+          value="Usuń stare dane o urządzeniu"
+          name="device_info"
+          onclick="return confirm('Czy na pewno chcesz usunąć stare dane o urządzeniu?');"
+        />
+      </form>
+      <h1>Wyslij krótki raport średnich wartosci czujników z wybranych dni</h1>
+      <form method="POST" id="send_email" onsubmit="clearForm()">
+        {% csrf_token %} {{ form.as_p }}
+        <input
+          type="submit"
+          value="Wyślij email"
+          name="send_email"
+          onclick="return confirm('Czy na pewno chcesz wyslac email na {{email_user}}?');"
+        />
+      </form>
+
+      {% if message_sensor_delete %}
+      <p>{{ message_sensor_delete }}</p>
+      {% endif %} {% if message_logs_delete %}
+      <p>{{ message_logs_delete }}</p>
+      {% endif %} {% if message_device_info_delete %}
+      <p>{{ message_device_info_delete }}</p>
+      {% endif %} {% if message_email %}
+      <p>{{ message_email }}</p>
+      {% endif %}
+    </div>
+    <div id="left_menu">
+      <a href="/control_panel/">Panel kontrolny</a>
+      <a href="/control_panel/profile">Profil</a>
+      <a href="/control_panel/database_from_mysql/">Zobacz dane pomiarów</a>
+      <a href="/control_panel/logs/">Logi</a>
+      <a href="/control_panel/device_info/">O urządzeniu</a>
+      <a href="/control_panel/settings/">Ustawienia</a>
+    </div>
+  </body>
+</html>

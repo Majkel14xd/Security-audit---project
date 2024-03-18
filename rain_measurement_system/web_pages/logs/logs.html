@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logi</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href=" {% static 'control_panel/control_panel_style.css' %} "
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href=" {% static 'logs/logs_style.css' %} "
+    />
+    <script src="{% static 'logs/logs.js' %} "></script>
+  </head>
+  <body>
+    <div id="top_menu">
+      <a href="/signout">Wyloguj</a>
+    </div>
+    <div id="content">
+      <h1 id="napis_logi">Logi</h1>
+      <form method="POST">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Szukaj</button>
+      </form>
+      {% if logs %}
+      <table id="table_log">
+        <tr>
+          <th>Data</th>
+          <th>Godzina</th>
+          <th>Treść logu</th>
+        </tr>
+        {% if logs %} {% for log in logs %}
+        <tr>
+          <td>{{ log.data_zdarzenia }}</td>
+          <td>{{ log.godzina_zdarzenia }}</td>
+          <td>{{ log.opis_zdarzenia }}</td>
+        </tr>
+        {% endfor %} {% else %}
+        <tr>
+          <td colspan="3"></td>
+          {% endif %}
+        </tr>
+      </table>
+      {% else %}
+      <p id="msg_data_empty">{{msg_data_empty }}</p>
+      {% endif %}
+      <div id="pagination">
+        <button id="prevPage">Poprzednia</button>
+        <button id="nextPage">Następna</button>
+      </div>
+    </div>
+    <div id="left_menu">
+      <a href="/control_panel/">Panel kontrolny</a>
+      <a href="/control_panel/profile">Profil</a>
+      <a href="/control_panel/database_from_mysql/">Zobacz dane pomiarów</a>
+      <a href="/control_panel/logs/">Logi</a>
+      <a href="/control_panel/device_info/">O urządzeniu</a>
+      <a href="/control_panel/settings/">Ustawienia</a>
+    </div>
+  </body>
+</html>

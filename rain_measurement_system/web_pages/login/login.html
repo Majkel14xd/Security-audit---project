@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logowanie</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'login/login_style.css' %}"
+    />
+  </head>
+  <body>
+    <div id="logowanie-napis">Zaloguj sie do systemu mierzenia opadów</div>
+    <div id="login-panel">
+      <form method="POST">
+        {% csrf_token %}
+        <p>Login: {{ form.username }}</p>
+        <p>Hasło: {{ form.password }}</p>
+        <button type="submit" id="zaloguj_button">Zaloguj</button>
+        {% if msg %}
+        <p id="login_message">{{ msg }}</p>
+        {% endif %}
+      </form> 
+    </div>
+       <div id="back-container">
+      <a id="back" href="/">Powrót</a>
+    </div>
+  </body>
+</html>

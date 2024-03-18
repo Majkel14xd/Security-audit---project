@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dane o urządzeniu</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href=" {% static 'control_panel/control_panel_style.css' %} "
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href=" {% static 'device_info/device_info_style.css' %} "
+    />
+  </head>
+  <body>
+    <div id="top_menu">
+      <a href="/signout">Wyloguj</a>
+    </div>
+    <div id="content">
+      <h1>Informacje o urządzeniu</h1>
+      <p>Adres MAC urządzenia: {{ latest_device_info.Device_mac_address }}</p>
+      <p>SSID routera: {{ latest_device_info.Network_ssid }}</p>
+      <p>Adres IP urządzenia do sieci: {{ latest_device_info.Network_ip }}</p>
+      <p>Nazwa bazy danych: {{ latest_device_info.Database_name }}</p>
+      <p>Ip bazy danych: {{ latest_device_info.Database_ip }}</p>
+      <p>Port bazy danych: {{ latest_device_info.Database_port }}</p>
+      <p>
+        Nazwa uzytkownika bazy danych: {{latest_device_info.Database_user_name}}
+      </p>
+      <p>Data aktualizacji: {{ latest_device_info.Data_aktualizacji }}</p>
+      <p>Godzina aktualizacji: {{ latest_device_info.Czas_aktualizacji }}</p>
+      <p>Status połączenia urządzenia z systemem Blynk: {{device_connected}}</p>
+    </div>
+    <div id="left_menu">
+      <a href="/control_panel/">Panel kontrolny</a>
+      <a href="/control_panel/profile">Profil</a>
+      <a href="/control_panel/database_from_mysql/">Zobacz dane pomiarów</a>
+      <a href="/control_panel/logs/">Logi</a>
+      <a href="/control_panel/device_info/">O urządzeniu</a>
+      <a href="/control_panel/settings/">Ustawienia</a>
+    </div>
+  </body>
+</html>

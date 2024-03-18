@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel kontrolny systemu opadów wody</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href=" {% static 'control_panel/control_panel_style.css' %} "
+    />
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href=" {% static 'control_panel/control_panel_style_main.css' %} "
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% load static %}
+    <script
+      src=" {% static 'control_panel/switch_sensor_off_on.js' %}  "
+      type="module"
+      async
+    ></script>
+     <script
+      src=" {% static 'control_panel/control_panel.js' %}  "
+    ></script>
+    <script
+      src=" {% static 'control_panel/password_keys.js' %}  "
+      type="module"
+    ></script>
+  </head>
+  <body>
+    <div id="top_menu">
+      <a href="/signout/">Wyloguj</a>
+    </div>
+    <div class="content_main_control_panel">
+      <div class="column" id="water_sensor">
+          <h2>Czujnik poziomu wody po opadach</h2>
+        <div class="gauge" id="gauge_water_sensor">
+          <div class="gauge__body">
+            <div class="gauge__fill" id="gauge__fill_water_sensor"></div>
+            <div class="gauge__cover" id="gauge__cover_water_sensor"></div>
+          </div>
+        </div>
+        {% load static %}
+        <script
+          src=" {% static 'control_panel/gauge_and_api.js' %}  "
+          type="text/javascript"
+        ></script>
+        <input type="checkbox" id="switch_water_sensor_off_on" />   
+        <label for="switch_water_sensor_off_on"></label>
+         <p id="off_on">Włącz/Wyłącz czujnik</p>   
+            <p id="Informacja">Informacja: </p>
+         <p id="get_water_sensor_text_data"></p>
+      </div>
+      <div class="column" id="rain_sensor">
+          <h2>Czujnik opadów deszczu</h2>
+        <div class="gauge" id="gauge_rain_sensor">
+          <div class="gauge__body">
+            <div class="gauge__fill" id="gauge__fill_rain_sensor"></div>
+            <div class="gauge__cover" id="gauge__cover_rain_sensor"></div>
+          </div>
+        </div>
+        <input type="checkbox" id="switch_rain_sensor_off_on" />
+         <label for="switch_rain_sensor_off_on"></label>
+           <p id="off_on">Włącz/Wyłącz czujnik</p>   
+            <p id="Informacja">Informacja: </p>
+         <p id="get_rain_sensor_text_data"></p>
+
+      </div>
+      <div div class="column" id="rain_gaugae">
+        <h2>Zbiornik wody po opadach</h2>
+        <p id="get_rain_gauge_data">     </p>
+        <br/>
+        <br/>
+          <br/>
+        <br/>
+          <br/>
+        <br/>
+        <p id="Informacja">Informacja: </p>
+        <p id="get_water_notification_text_data"></p>
+    </div>
+    <div id="left_menu">
+      <a href="/control_panel/">Panel kontrolny</a>
+      <a href="/control_panel/profile">Profil</a>
+      <a href="/control_panel/database_from_mysql/">Zobacz dane pomiarów</a>
+      <a href="/control_panel/logs/">Logi</a>
+      <a href="/control_panel/device_info/">O urządzeniu</a>
+      <a href="/control_panel/settings/">Ustawienia</a>
+      {% if welcome_message %}
+      <p id="welcome_message">{{ welcome_message }}</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

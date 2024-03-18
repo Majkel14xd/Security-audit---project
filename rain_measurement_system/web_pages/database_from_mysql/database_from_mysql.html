@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dane z pomiarów</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'control_panel/control_panel_style.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'database_from_mysql/database_from_mysql_style.css' %}"
+    />
+    <script src="{% static 'database_from_mysql/database_from_mysql.js' %}"></script>
+  </head>
+  <body>
+    <div id="top_menu">
+      <a href="/signout">Wyloguj</a>
+    </div>
+    <div id="content">
+      <h1 id="napis_dane">Dane z bazy</h1>
+
+      <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Szukaj</button>
+      </form>
+
+      {% if data %}
+      <table id="table_data">
+        <thead>
+          <tr>
+            {% if form.cleaned_data.model == 'water_sensor' %}
+            <th>Data</th>
+            <th>Godzina</th>
+            <th>Wartość</th>
+            <th>Wartość Tekstowa</th>
+            <th>Alert</th>
+            {% endif %} {% if form.cleaned_data.model == 'rain_gauge' %}
+            <th>Data</th>
+            <th>Godzina</th>
+            <th>Wartość</th>
+            {% endif %} {% if form.cleaned_data.model == 'rain_sensor' %}
+            <th>Data</th>
+            <th>Godzina</th>
+            <th>Wartość</th>
+            <th>Wartość Tekstowa</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in data %}
+          <tr>
+            {% if form.cleaned_data.model == 'water_sensor' %}
+            <td>{{ item.data_odczytu }}</td>
+            <td>{{ item.godzina_odczytu }}</td>
+            <td>{{ item.wartosc }}</td>
+            <td>{{ item.wartosc_tekstowa }}</td>
+            <td>{{ item.alert }}</td>
+            {% endif %} {% if form.cleaned_data.model == 'rain_sensor' %}
+            <td>{{ item.data_odczytu }}</td>
+            <td>{{ item.godzina_odczytu }}</td>
+            <td>{{ item.wartosc }}</td>
+            <td>{{ item.wartosc_tekstowa }}</td>
+            {% endif %} {% if form.cleaned_data.model == 'rain_gauge' %}
+            <td>{{ item.data_odczytu }}</td>
+            <td>{{ item.godzina_odczytu }}</td>
+            <td>{{ item.wartosc }}</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p id="message_database">{{ message }}</p>
+      {% endif %}
+      <div id="pagination">
+        <button id="prevPage">Poprzednia</button>
+        <button id="nextPage">Następna</button>
+        <br />
+        <br />
+        <a
+          href="/control_panel/database_from_mysql/live_chart"
+          id="button_live_chart"
+          >Wykresy live</a
+        >
+      </div>
+    </div>
+    <div id="left_menu">
+      <a href="/control_panel/">Panel kontrolny</a>
+      <a href="/control_panel/profile">Profil</a>
+      <a href="/control_panel/database_from_mysql/">Zobacz dane pomiarów</a>
+      <a href="/control_panel/logs/">Logi</a>
+      <a href="/control_panel/device_info/">O urządzeniu</a>
+      <a href="/control_panel/settings/">Ustawienia</a>
+    </div>
+  </body>
+</html>
