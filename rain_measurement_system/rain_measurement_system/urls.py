@@ -24,6 +24,7 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("admin/", admin.site.urls),
     path("login/", views.login, name="login"),
+    path("otp_auth/", views.login, name="otp_auth"),
     path("control_panel/", views.control_panel, name="control_panel"),
     path(
         "control_panel/profile/change_password/",

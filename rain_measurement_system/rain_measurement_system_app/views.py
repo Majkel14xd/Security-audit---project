@@ -19,6 +19,7 @@ from django.db import connection
 from django.core.mail import send_mail
 from django.db.models import *
 from datetime import *
+from django_otp import user_has_device
 
 def index(request):
     if request.user.is_authenticated:
@@ -327,3 +328,6 @@ def live_chart(request):
         form = SensorSelectionFormGraph()
 
     return render(request, 'live_chart/live_chart.html', {'form': form})
+
+def otp_auth(request):
+    return render(request, 'otp_auth/otp_auth.html')
