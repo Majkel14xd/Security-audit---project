@@ -19,7 +19,9 @@ from django.db import connection
 from django.core.mail import send_mail
 from django.db.models import *
 from datetime import *
+from .forms import EmailScheduleForm, EnableOTPForm
 from django_otp import user_has_device
+from django_otp.plugins.otp_totp.models import TOTPDevice
 
 def index(request):
     if request.user.is_authenticated:
@@ -87,6 +89,7 @@ def profile(request):
     if not request.user.is_authenticated:
         return redirect("login")
     user = request.user
+    otp_enabled = user_has_device(user)
     username = user.username
     email = user.email
     first_name = user.first_name
@@ -102,6 +105,7 @@ def profile(request):
         'date_joined': date_joined,
         'last_login': last_login,
         'id_num': id_num,
+        'otp_enabled': otp_enabled,
     }
     return render(request, "profile/profile.html", context)
 
@@ -198,7 +202,26 @@ def settings(request):
     user = request.user
     email_user = user.email
     form = EmailScheduleForm()
+    otp_enabled = user_has_device(user)
+    initial = {'enable_otp': otp_enabled}
+    otp_form = EnableOTPForm(initial=initial) 
     if request.method == 'POST':
+        otp_form = EnableOTPForm(request.POST)
+        if otp_form.is_valid():
+            if otp_form.cleaned_data['enable_otp']:
+                if not user_has_device(request.user):
+                    device = TOTPDevice.objects.create(user=request.user)
+                    device.save()
+                    messages.success(request, 'Autoryzacja dwuetapowa została włączona.')
+                else:
+                    messages.warning(request, 'Autoryzacja dwuetapowa jest już włączona.')
+            else:
+                if user_has_device(request.user):
+                    request.user.staticdevice_set.all().delete()
+                    request.user.totpdevice_set.all().delete()
+                    messages.success(request, 'Autoryzacja dwuetapowa została wyłączona.')
+                else:
+                    messages.warning(request, 'Autoryzacja dwuetapowa jest już wyłączona.')   
         if 'sensors' in request.POST:
             RainGaugae.objects.all().delete()
             RainSensor.objects.all().delete()
@@ -254,6 +277,8 @@ def settings(request):
                 message_email = "Email wyslano"
             else:
                 form = EmailScheduleForm(request.POST)
+                otp_form = EnableOTPForm(request.POST)
+
         request.session['message_sensor_delete'] = message_sensor_delete
         request.session['message_logs_delete'] = message_logs_delete
         request.session['message_email'] = message_email
@@ -271,7 +296,8 @@ def settings(request):
         'message_email': message_email,
         'message_device_info_delete': message_device_info_delete,
         'email_user': email_user,
-        'form': form
+        'form': form,
+        'otp_form': otp_form   
     }
     return render(request, 'settings/settings.html', context)
 

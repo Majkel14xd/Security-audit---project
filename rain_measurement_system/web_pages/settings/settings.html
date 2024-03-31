@@ -62,7 +62,13 @@
           onclick="return confirm('Czy na pewno chcesz wyslac email na {{email_user}}?');"
         />
       </form>
-
+      <h1>Weryfikacja dwuetapowa użytkownika</h1>
+      <form method="POST" id="enable_otp" onsubmit="clearForm()">
+    {% csrf_token %}
+    {{ otp_form.as_p }}
+    <input type="submit" value="Modyfikuj weryfikacje">
+</form>
+ 
       {% if message_sensor_delete %}
       <p>{{ message_sensor_delete }}</p>
       {% endif %} {% if message_logs_delete %}

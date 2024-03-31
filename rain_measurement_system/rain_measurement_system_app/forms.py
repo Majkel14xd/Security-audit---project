@@ -66,3 +66,6 @@ class SensorSelectionFormGraph(forms.Form):
         label='Wybierz rodzaj czujnika:',
         choices=SENSOR_CHOICES,
     )
+
+class EnableOTPForm(forms.Form):
+    enable_otp = forms.BooleanField(label='Włącz lub wyłącz autoryzację dwuetapową', required=False)

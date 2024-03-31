@@ -29,6 +29,11 @@
       <p>Email: {{email}}</p>
       <p>Data rejestracji: {{date_joined}}</p>
       <p>Ostatnie logowanie: {{last_login}}</p>
+       {% if otp_enabled %}
+        <p>Autoryzacja dwuetapowa jest włączona dla tego użytkownika.</p>
+    {% else %}
+        <p>Autoryzacja dwuetapowa nie jest włączona dla tego użytkownika.</p>
+    {% endif %}
       <br />
       <a
         href="/control_panel/profile/change_password"
