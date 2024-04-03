@@ -22,7 +22,7 @@
       <a href="/signout">Wyloguj</a>
     </div>
     <div id="content">
-      <h1>Usuń dane z bazy</h1>
+      <h2>Usuń dane z bazy</h2>
       <form method="POST" id="delete_data_sensors" onsubmit="clearForm()">
         {% csrf_token %}
         <input
@@ -52,7 +52,7 @@
           onclick="return confirm('Czy na pewno chcesz usunąć stare dane o urządzeniu?');"
         />
       </form>
-      <h1>Wyslij krótki raport średnich wartosci czujników z wybranych dni</h1>
+      <h2>Wyslij krótki raport średnich wartosci czujników z wybranych dni</h2>
       <form method="POST" id="send_email" onsubmit="clearForm()">
         {% csrf_token %} {{ form.as_p }}
         <input
@@ -62,11 +62,14 @@
           onclick="return confirm('Czy na pewno chcesz wyslac email na {{email_user}}?');"
         />
       </form>
-      <h1>Weryfikacja dwuetapowa użytkownika</h1>
+      <h2>Weryfikacja dwuetapowa użytkownika</h2>
       <form method="POST" id="enable_otp" onsubmit="clearForm()">
     {% csrf_token %}
     {{ otp_form.as_p }}
-    <input type="submit" value="Modyfikuj weryfikacje">
+    <input type="submit" 
+    value="Modyfikuj weryfikacje"
+    onclick="return confirm('Czy na pewno chcesz włączyć lub wyłączyć weryfikacje otp na email {{email_user}}?');"
+    >
 </form>
  
       {% if message_sensor_delete %}
@@ -77,6 +80,12 @@
       <p>{{ message_device_info_delete }}</p>
       {% endif %} {% if message_email %}
       <p>{{ message_email }}</p>
+      {% endif %}{% if message_otp_enable_again %}
+      <p>{{ message_otp_enable_again }}</p>
+      {% endif %}{% if message_otp_disable %}
+      <p>{{ message_otp_disable }}</p>
+      {% endif %}{% if message_otp_disable_again %}
+      <p>{{ message_otp_disable_again }}</p>
       {% endif %}
     </div>
     <div id="left_menu">

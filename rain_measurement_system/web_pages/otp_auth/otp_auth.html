@@ -10,19 +10,27 @@
       type="text/css"
       href="{% static 'login/login_style.css' %}"
     />
+      <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'otp_auth/otp_auth_style.css' %}"
+    />
   </head>
   <body>
     <div id="logowanie-napis">Weryfikacja dwustopniowa</div>
     <div id="login-panel">
-      <form method="POST">
-        {% csrf_token %}
+     <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" id="auth_button">Potwierdz logowanie</button>
+</form>
 
-        <button type="submit" id="zaloguj_button">Zaloguj</button>
- 
-      </form> 
+{% if msg %}
+    <p>{{ msg }}</p>
+{% endif %}
     </div>
        <div id="back-container">
-      <a id="back" href="/login">Powrót do logowania</a>
+      <a id="back" href="/signout">Wyloguj sie i wróc na strone głowną</a>
     </div>
   </body>
 </html>

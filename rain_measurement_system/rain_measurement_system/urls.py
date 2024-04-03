@@ -24,7 +24,7 @@ urlpatterns = [
     path("", views.index, name="index"),
     path('admin/', admin.site.urls),
     path("login/", views.login, name="login"),
-    path("otp_auth/", views.otp_auth, name="otp_auth"),
+    path("login/otp_auth/", views.otp_auth, name="otp_auth"),
     path("control_panel/", views.control_panel, name="control_panel"),
     path(
         "control_panel/profile/change_password/",
@@ -41,6 +41,7 @@ urlpatterns = [
     ),
     path("control_panel/device_info/", views.device_info, name="device_info"),
     path("control_panel/settings/", views.settings, name="settings"),
+    path("control_panel/settings/otp_enable", views.otp_enable, name="otp_enable"),
     path(
         "water_sensor_data/",
         views.water_sensor_data,

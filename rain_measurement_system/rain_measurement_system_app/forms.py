@@ -69,3 +69,6 @@ class SensorSelectionFormGraph(forms.Form):
 
 class EnableOTPForm(forms.Form):
     enable_otp = forms.BooleanField(label='Włącz lub wyłącz autoryzację dwuetapową', required=False)
+
+class OTPForm(forms.Form):
+    otp_pin = forms.CharField(label="Wprowadź 6-cyfrowy PIN z aplikacji autoryzującej", max_length=6, min_length=6, widget=forms.TextInput(attrs={'type': 'number'}))
