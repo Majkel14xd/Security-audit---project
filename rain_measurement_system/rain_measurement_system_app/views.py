@@ -81,6 +81,9 @@ def control_panel(request):
 def change_password(request):
     if not request.user.is_authenticated:
         return redirect("login")
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     if request.method == "POST":
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -103,6 +106,9 @@ def signout(request):
 def profile(request):
     if not request.user.is_authenticated:
         return redirect("login")
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     user = request.user
     otp_enabled = user_has_device(user)
     username = user.username
@@ -128,6 +134,9 @@ def profile(request):
 def logs(request):
     if not request.user.is_authenticated:
         return redirect("login")
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
 
     logs = None
     msg_data_empty = ""
@@ -153,7 +162,9 @@ def logs(request):
 def database_from_mysql(request):
     if not request.user.is_authenticated:
         return redirect("login")
-
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     data = None
     message = ""
     if request.method == "POST":
@@ -192,6 +203,9 @@ def database_from_mysql(request):
 def device_info(request):
     if not request.user.is_authenticated:
         return redirect("login")
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     device_connected = "Brak informacji"
     latest_device_info = DeviceInfo.objects.latest('id')
     device_connected_status = device_is_connected()
@@ -209,7 +223,9 @@ def device_info(request):
 def settings(request):
     if not request.user.is_authenticated:
         return redirect("login")
-
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     message_sensor_delete = None
     message_logs_delete = None
     message_email = None
@@ -424,6 +440,9 @@ def otp_auth(request):
         return render(request, 'otp_auth/otp_auth.html', {"form": form})
 
 def otp_enable(request):
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     user = request.user
     otp_enabled = user_has_device(user)
     message = None
