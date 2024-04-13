@@ -353,6 +353,9 @@ def settings(request):
 def water_sensor_data(request):
     if not request.user.is_authenticated:
         return redirect("login")
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     get_water_sensor_data = water_sensor_data_api()
     return JsonResponse({"get_water_sensor_data": get_water_sensor_data})
 
@@ -360,6 +363,9 @@ def water_sensor_data(request):
 def rain_sensor_data(request):
     if not request.user.is_authenticated:
         return redirect("login")
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     get_rain_sensor_data = rain_sensor_data_api()
     return JsonResponse({"get_rain_sensor_data": get_rain_sensor_data})
 
@@ -367,24 +373,36 @@ def rain_sensor_data(request):
 def rain_gauge_data(request):
     if not request.user.is_authenticated:
         return redirect("login")
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     get_rain_gauge_data = rain_gauge_data_api()
     return JsonResponse({"get_rain_gauge_data": get_rain_gauge_data})
 
 def water_sensor_text_data(request):
     if not request.user.is_authenticated:
         return redirect("login")
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     get_water_sensor_text_data=water_sensor_text_data_api()
     return JsonResponse({"get_water_sensor_text_data": get_water_sensor_text_data})
 
 def rain_sensor_text_data(request):
     if not request.user.is_authenticated:
         return redirect("login")
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     get_rain_sensor_text_data=rain_sensor_text_data_api()
     return JsonResponse({"get_rain_sensor_text_data": get_rain_sensor_text_data})
 
 def water_notification_text_data(request):
     if not request.user.is_authenticated:
         return redirect("login")
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     get_water_notification_text_data=water_notification_data_api()
     return JsonResponse({"get_water_notification_text_data": get_water_notification_text_data})
 
@@ -392,7 +410,9 @@ def water_notification_text_data(request):
 def live_chart(request):
     if not request.user.is_authenticated:
         return redirect("login")
-
+    status_otp = request.session.pop("status_otp", None)
+    if request.user.is_authenticated and status_otp == 'no':
+        return redirect("otp_auth")
     if request.method == 'POST':
         form = SensorSelectionFormGraph(request.POST)
         if form.is_valid():
