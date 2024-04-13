@@ -435,12 +435,10 @@ def otp_auth(request):
     if request.user.is_authenticated and otp_enabled and status == 'yes':
         return redirect("control_panel")
     if request.user.is_authenticated and otp_enabled and status == 'no':
-        print(status)
         device = TOTPDevice.objects.get(user=request.user)
         secret_key = b32encode(device.bin_key).decode('utf-8')
         totp = pyotp.TOTP(secret_key)
         if request.method == "POST":
-            print(status)
             form = OTPForm(request.POST)
             if form.is_valid():
                 pin = form.cleaned_data["otp_pin"]
@@ -448,7 +446,6 @@ def otp_auth(request):
                     request.session["welcome_message"] = f"Witaj {request.user.username}!"
                     status = 'yes'
                     request.session["status_otp"] = status
-                    print(status)
                     return redirect("control_panel")
                   
                 else:
